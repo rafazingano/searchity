@@ -25,3 +25,7 @@ Route::post('/cursos', 'CursoController@findCurso')->name("findCurso");
 
 
 Route::get('/cursoInfo/{id}', 'CursoController@cursoPaginaIndividual')->where('id', '[0-9]+');
+
+Route::get('/compare', 'CursoController@populaDdlComparacao')->name("populaComparacao");
+
+Route::post('/comparacao', 'CursoController@compara')->name("compara");

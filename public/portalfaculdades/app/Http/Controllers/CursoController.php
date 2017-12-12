@@ -16,53 +16,61 @@ class CursoController extends Controller
         $search = Input::get('findCurso');
 
         $cursos = DB::table('cursos')->where('nome','LIKE',"%{$search}%")->get();
-
-        //Curso::with('entidade')->get();
-
-        //$cursos = DB::table('cursos')
-          //  ->join('entidades', 'cursos.entidadeid', '=', 'entidades.id')
-           // ->select('cursos.nome', 'entidades.nome', 'entidades.id')
-           // ->where('cursos.nome','LIKE',"%{$search}%")
-           // ->get();
-
         $entidades = DB::table('entidades')->get();
 
         if (empty($userInput)) {
             $cursos = DB::table('cursos')->get();
-          //  $cursos = App\curso::with('entidade')->get();
-           // $cursos = cursos::with('entidade')->get();
         }
 
         return view('listagemCursos')->with('cursos', $cursos)->with('entidades', $entidades);
     }
 
     public function cursoPaginaIndividual($id){
-
-        //$curso = Curso::find($id);
-       // $curso = DB::table('cursos')->where('Id','=',"%{$id}%")->get();
-
-
         $curso= DB::table('cursos')
             ->select('*')
             ->where('Id', '=', $id)
             ->get();
 
-
-
         $avaliacaoCurso = DB::table('avaliacaocurso')->where('curso','=',"%{$id}%")->get();
-
-
-     //   $avalicaoCurso2 = DB::table('shops_item_restocked')
-      //      ->join('itens', 'shops_item_restocked.ItemId', '=', 'itens.id')
-     //      ->select('itens.id', 'itens.image', 'itens.price', 'itens.name')
-      //      ->where('shopId', '=', $id)
-      //      ->get();
 
         return view('cursoIndividual')->with('curso', $curso)->with('avaliacaoCurso', $avaliacaoCurso);
     }
 
+    public function populaDdlComparacao(){
+        $cursos = DB::table('cursos')->get();
+        $cursos2 = DB::table('cursos')->get();
+
+        return view('compare')->with('cursos', $cursos)->with('cursos2', $cursos2);
+    }
+
+    public function compara()
+    {
+        $cursosID = Input::get('cursosID');
+        $cursosID2 = Input::get('cursosID2');
+
+        //
+
+     //   $UserId = Auth::id();
+
+        $curso1 = DB::table('cursos')->where('Id', $cursosID)->get();
+        $curso2 = DB::table('cursos')->where('Id', $cursosID2)->get();
+
+        $curso1= DB::table('cursos')
+            ->select('*')
+            ->where('Id', '=', $cursosID)
+            ->get();
+
+
+        $curso2= DB::table('cursos')
+            ->select('*')
+            ->where('Id', '=', $cursosID2)
+            ->get();
 
 
 
+        //
 
+      //  return view('comparacao')->with('cursosID', $cursosID)->with('cursosID2', $cursosID2);
+        return view('comparacao')->with('curso1', $curso1)->with('curso2', $curso2);
+    }
 }

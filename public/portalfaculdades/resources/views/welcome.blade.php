@@ -1,7 +1,7 @@
 @extends('template.template')
 @section('content')
 
-<style>
+    <style>
     #divGeneral{
         padding: 50px;
         margin-left: 100px;
@@ -31,6 +31,19 @@
         font-size: 18px;
     }
 
+        .btnBase{
+            padding: 15px;
+            margin: 15px;
+            background-color: #d3eae7;
+            width: 100px;
+            display: inline;
+        }
+
+    .btnBase a{
+        text-decoration: none;
+        color: #51d1e1;
+    }
+
 </style>
 
 
@@ -44,6 +57,10 @@
     {!! Form::submit('Buscar') !!}
     {!! Form::close() !!}
 
+    <br><br>
+    <div class="btnBase"><a href="./compare">Comparar</a></div> <div class="btnBase"><a href="">Em duvida?</a></div>
+
     </div>
+
 
 @stop
